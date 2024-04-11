@@ -188,7 +188,7 @@ public class VacanteModel implements CRUD{
                 update = true;
                 JOptionPane.showMessageDialog(null, "la vacante se actualizo correctamente");
             }
-        }catch (Exception error){
+        }catch (SQLException error){
             JOptionPane.showMessageDialog(null,"Error >" + error.getMessage());
         }
         ConfigDB.closeConnection();

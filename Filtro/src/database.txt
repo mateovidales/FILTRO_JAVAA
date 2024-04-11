@@ -1,0 +1,56 @@
+CREATE DATABASE administracion_vacantes_riwi;
+USE administracion_vacantes_riwi;
+CREATE TABLE empresa(
+id int primary key auto_increment,
+nombre VARCHAR(255) not null,
+sector VARCHAR(255) not null,
+ubicacion VARCHAR(255) not null,
+contacto VARCHAR(255) not null
+);
+
+CREATE TABLE coder(
+id int primary key auto_increment,
+nombre VARCHAR(255) not null,
+apellidos VARCHAR(255) not null,
+documento VARCHAR(255) not null,
+cohorte int not null,
+cv TEXT
+);
+
+
+CREATE TABLE vacante(
+id int primary key auto_increment,
+titulo VARCHAR(255) not null,
+descripcion TEXT not null,
+duracion VARCHAR(255) not null,
+estado VARCHAR(255) not null,
+id_empresa int,
+FOREIGN KEY (id_empresa) REFERENCES empresa(id) ON DELETE CASCADE
+);
+
+CREATE TABLE contratacion(
+id int primary key auto_increment,
+fecha_aplicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
+estado VARCHAR(255) not null,
+salario DECIMAL not null,
+id_vacante int,
+id_coder int,
+FOREIGN KEY(id_vacante) REFERENCES vacante(id) ON DELETE CASCADE,
+FOREIGN KEY (id_coder) REFERENCES coder(id) ON DELETE CASCADE
+);
+
+ALTER TABLE vacante
+ADD COLUMN tecnologia VARCHAR(255) not null;
+
+ALTER TABLE coder
+ADD COLUMN clan VARCHAR(255) not null;
+
+ALTER TABLE coder
+MODIFY COLUMN documento VARCHAR(255) UNIQUE not null;
+
+ALTER TABLE vacante
+MODIFY COLUMN estado VARCHAR(10) NOT NULL CHECK(estado IN("activo","inactivo"));
+
+INSERT INTO empresa (nombre,sector,ubicacion,contacto) VALUES ("siste","banco","bogota","mail");
+
+UPDATE empresa SET nombre = "intel", sector = "tech", ubicacion = "medellin", contacto = "mail" WHERE id=3;

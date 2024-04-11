@@ -2,19 +2,16 @@ package model;
 
 import database.ConfigDB;
 import entities.Contratacion;
+import entities.Vacante;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContratacionModel implements CRUD{
     @Override
     public Object insert(Object obj){
-    //Nos conectamos a la BD
     Connection objConnection = ConfigDB.openConnection();
     Contratacion objContratacion = (Contratacion) obj;
         try {
@@ -47,8 +44,10 @@ public class ContratacionModel implements CRUD{
         Connection objConnection = ConfigDB.openConnection();
         List<Object>listContrataciones = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM contratacion INNER JOIN vacante ON vacante.id = contratacion.id +\n" +
-                    "                    \"INNER JOIN coder ON coder.id = contratacion.id;";
+          String sql = "SELECT * FROM contratacion " +
+                    "INNER JOIN vacante ON vacante.id = contratacion.id_vacante " +
+                    "INNER JOIN coder ON coder.id = contratacion.id_coder";
+
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
             ResultSet objResult = objPrepare.executeQuery();
             while (objResult.next()){
@@ -58,7 +57,8 @@ public class ContratacionModel implements CRUD{
                 objContrataciones.setFecha_aplicacion(objResult.getDate("contratacion.fecha_aplicacion"));
                 objContrataciones.setEstado(objResult.getString("contratacion.estado"));
                 objContrataciones.setSalario(objResult.getFloat("contratacion.salario"));
-                objContrataciones.setId_vacante(objResult.getInt("id_vacante"));
+                objContrataciones.setId_vacante(objResult.getInt("contratacion.id_vacante"));
+                objContrataciones.setId_coder(objResult.getInt("contratacion.id_coder"));
                 listContrataciones.add(objContrataciones);
             }
         }catch (Exception e){
@@ -76,6 +76,23 @@ public class ContratacionModel implements CRUD{
 
     @Override
     public boolean delete(Object obj) {
-        return false;
+        Connection objConnection = ConfigDB.openConnection();
+        Contratacion objContratacion = (Contratacion) obj;
+        boolean delete = false;
+        try {
+            String sql = "DELETE FROM contratacion WHERE id = ?;";
+            PreparedStatement objPrepared = objConnection.prepareStatement(sql);
+            objPrepared.setInt(1,objContratacion.getId());
+            int affectedRows = objPrepared.executeUpdate();
+            if (affectedRows>0){
+                delete = true;
+                JOptionPane.showMessageDialog(null, "La contratacion fue eliminada correctamente");
+            }
+        }catch (SQLException error){
+            JOptionPane.showMessageDialog(null, "error"+error.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return delete;
     }
-}
+    }
+

@@ -67,7 +67,7 @@ public class Main {
                     3. Eliminar Vacante
                     4. Actualizar Vacante
                     5. Buscar Vacante por titulo
-                    6. Buscar Vacante por tec
+                    6. Buscar Vacante por Tecnologia
                     7. Salir
                     INGRESE UNA OPCION:
                     """));
@@ -99,8 +99,8 @@ public class Main {
                     1. Listar Contrataciones
                     2. Crear Contratacion
                     3. Eliminar Contratacion
-                    4. Actualizar Contratacion
-                    7. Salir
+                    4. Actualizar Contratacion1
+                    5. Salir
                     INGRESE UNA OPCION:
                     """));
                         switch (opcion2){
@@ -111,17 +111,12 @@ public class Main {
                                 ContratacionController.insert();
                                 break;
                             case 3:
+                                ContratacionController.delete();
                                 break;
                             case 4:
                                 break;
-                            case 5:
-                                VacanteController.getByTitle();
-                                break;
-                            case 6:
-                                VacanteController.getByTechnology();
-                                break;
                         }
-                    }while (opcion2 != 7);
+                    }while (opcion2 != 5);
                     break;
             }
         }while (opcion !=4);

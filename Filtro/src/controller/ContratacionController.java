@@ -45,8 +45,6 @@ public class ContratacionController {
 
         JOptionPane.showMessageDialog(null,list);
     }
-
-    //creamos una sobreescritura para guardar toda la lista en string y despues mostrarla en un JOPTION
     public static String getAll(List<Object> list){
         String listString = "Lista de Reservas \n";
         for (Object i: list){
@@ -54,6 +52,20 @@ public class ContratacionController {
             listString+=objContratacion.toString()+"\n";
         }
         return listString;
+    }
+
+    public static void delete(){
+        Object[]opcion = Utils.listToArray(instanceModel().findAll());
+
+        Contratacion objSelected = (Contratacion) JOptionPane.showInputDialog(
+                null,
+                "Seleccione el contrato para eliminar ",
+                "",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcion,
+                opcion[0]);
+        instanceModel().delete(objSelected);
     }
 
 

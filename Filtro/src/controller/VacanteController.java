@@ -76,7 +76,7 @@ public class VacanteController {
         instanceModel().delete(objSelected);
     }
 
-    public static void update(){
+    public static void update() {
         Object[] opciones = Utils.listToArray(instanceModel().findAll());
         Vacante objSelected = (Vacante) JOptionPane.showInputDialog(
                 null,
@@ -87,11 +87,11 @@ public class VacanteController {
                 opciones,
                 opciones[0]
         );
-        String titulo = JOptionPane.showInputDialog(null,"Ingrese el nuevo titulo de la vacante: ",objSelected.getTitulo());
-        String descripcion = JOptionPane.showInputDialog(null,"Ingrese la nueva descripcion: ",objSelected.getDescripcion());
-        String duracion = JOptionPane.showInputDialog(null,"Ingrese la nueva duracion de la vacante: ",objSelected.getDuracion());
-        String estado = JOptionPane.showInputDialog(null,"Ingrese el nuevo estado:(ACTIVO O INACTIVO) ",objSelected.getEstado());
-        String tecnologia = JOptionPane.showInputDialog(null,"Ingrese la nueva tecnologia: ",objSelected.getTecnologia());
+        String titulo = JOptionPane.showInputDialog(null, "Ingrese el nuevo titulo de la vacante: ", objSelected.getTitulo());
+        String descripcion = JOptionPane.showInputDialog(null, "Ingrese la nueva descripcion: ", objSelected.getDescripcion());
+        String duracion = JOptionPane.showInputDialog(null, "Ingrese la nueva duracion de la vacante: ", objSelected.getDuracion());
+        String estado = JOptionPane.showInputDialog(null, "Ingrese el nuevo estado:(ACTIVO O INACTIVO) ", objSelected.getEstado());
+        String tecnologia = JOptionPane.showInputDialog(null, "Ingrese la nueva tecnologia: ", objSelected.getTecnologia());
 
         Object[] opcionesEmpresa = Utils.listToArray(EmpresaController.instanceModel().findAll());
 
